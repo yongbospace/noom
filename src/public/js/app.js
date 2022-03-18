@@ -12,6 +12,7 @@ let myStream;
 let muted = false;
 let cameraOff = false;
 let roomName;
+let nickname;
 let myPeerConnection;
 let myDataChannel;
 
@@ -99,6 +100,9 @@ camerasSelect.addEventListener("input", handleCameraChange);
 // Welcome Form (join a room)
 const welcome = document.getElementById("welcome");
 const welcomeForm = welcome.querySelector("form");
+const roomTitle = document.getElementById("roomTitle");
+const myNickname = document.getElementById("myNickname");
+const peerNickname = document.getElementById("peerNickname");
 
 async function initCall() {
   welcome.hidden = true;
@@ -109,11 +113,20 @@ async function initCall() {
 
 async function handelWelcomeSubmit(event) {
   event.preventDefault();
-  const input = welcomeForm.querySelector("input");
+  const roomInput = document.getElementById("roomInput");
+  const nickInput = document.getElementById("nickInput");
   await initCall();
-  socket.emit("join_room", input.value);
-  roomName = input.value;
-  input.value = "";
+  socket.emit("updateNickname", nickInput.value);
+  socket.emit("join_room", roomInput.value);
+  roomName = roomInput.value;
+  roomInput.value = "";
+  roomTitle.innerText = `Room: ${roomName}`;
+  myNickname.innerText = nickInput.value;
+  socket.on("peerNickname", (nickname) => handlePeerNick(nickname));
+}
+
+async function handlePeerNick(nickname) {
+  peerNickname.innerText = await nickname;
 }
 
 welcomeForm.addEventListener("submit", handelWelcomeSubmit);

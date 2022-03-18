@@ -14,12 +14,19 @@ const httpServer = http.createServer(app);
 const wsServer = SocketIO(httpServer);
 
 wsServer.on("connection", (socket) => {
+  socket["nickname"] = "anonymous";
+  socket.on("updateNickname", (nickname) => {
+    socket.nickname = nickname;
+    console.log("send nickname");
+  });
   socket.on("join_room", (roomName) => {
     socket.join(roomName);
     socket.to(roomName).emit("welcome");
+    socket.to(roomName).emit("peerNickname", socket.nickname);
   });
   socket.on("offer", (offer, roomName) => {
     socket.to(roomName).emit("offer", offer);
+    socket.to(roomName).emit("peerNickname", socket.nickname);
   });
   socket.on("answer", (answer, roomName) => {
     socket.to(roomName).emit("answer", answer);
