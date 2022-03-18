@@ -47,18 +47,17 @@ html(lang="en")
             div 
       div#call
         div.call
-          h2#roomTitle
-          div.controls
-            button#mute Mute
-            button#camera Cam Off
-            select#cameras
-          div#myStream.main
+          main#myStream.main
+            h2#roomTitle
+            button#mute.controls Mute
+            button#camera.controls Cam Off
+            select#cameras.controls
             div.my-video
               div#myNickname.chat-nick
-              video#myFace(autoplay,playsinline, width="480", height="270")
+              video#myFace(autoplay,playsinline)
             div.peer-video
               div#peerNickname.chat-nick        
-              video#peerFace(autoplay,playsinline, width="480", height="270")
+              video#peerFace(autoplay,playsinline)
             div#chat.chat
               div#chatInput
                 form.chat-form
