@@ -1,0 +1,162 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600&display=swap");
+
+:root {
+  --bg: rgba(177, 156, 217, 0.2);
+  --text: rgb(177, 156, 217, 1);
+  --subText: rgba(177, 156, 217, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  height: 95vh;
+  width: 100%;
+}
+
+h1,
+h4 {
+  color: var(--text);
+  text-align: center;
+  font-weight: 600;
+}
+header h4 {
+  margin-top: 36px;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+h1 {
+  font-size: 48px;
+  margin-bottom: 36px;
+}
+
+/* login */
+
+.welcome {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.login-form {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  width: 50%;
+}
+.login-form > * {
+  border: 0px;
+  height: 50px;
+}
+.login-form button {
+  margin-top: 10px;
+  background-color: var(--subText);
+  color: white;
+  cursor: pointer;
+  border-radius: 7px;
+  transition: all 0.5 linear;
+}
+.login-form button:hover {
+  background-color: var(--bg);
+  color: var(--text);
+}
+#welcome h4 {
+  margin-top: 20px;
+  font-size: 12px;
+}
+.login-form input {
+  border-bottom: 2px solid var(--bg);
+  color: var(--text);
+  font-size: 14px;
+}
+.login-form ::placeholder {
+  color: var(--subText);
+}
+.login-form ::placeholder,
+.login-form button {
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+/* call */
+
+.call {
+  margin: 10px;
+  color: var(--text);
+}
+h2 {
+  font-size: 20px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.controls > * {
+  border: 1px solid var(--text);
+  height: 30px;
+  border-radius: 5px;
+  background-color: white;
+  color: var(--text);
+}
+.controls > button {
+  width: 25%;
+  margin-right: 10px;
+}
+.controls > select {
+  width: 50%;
+  overflow: hidden;
+}
+.my-video,
+.peer-video {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+  position: relative;
+}
+.chat-nick {
+  position: absolute;
+  font-size: 14px;
+  font-weight: 600;
+  top: 5%;
+  left: 15%;
+  padding: 8px;
+  background-color: var(--text);
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+/* chat */
+.chat {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.chat-form > * {
+  border: 0px;
+  background-color: var(--text);
+  color: white;
+  margin-left: 10px;
+  padding: 8px;
+}
+.chat-form input::placeholder {
+  color: white;
+}
+.chat-form button {
+  cursor: pointer;
+}
+.chat-list {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.chat-list li {
+  margin-top: 5px;
+  font-size: 12px;
+}

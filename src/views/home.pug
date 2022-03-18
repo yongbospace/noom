@@ -5,32 +5,40 @@ html(lang="en")
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title Noom
-    link(rel="stylesheet", href="https://unpkg.com/mvp.css")
+    link(rel="stylesheet", href="../public/css/reset.css")
+    link(rel="stylesheet", href="../public/css/style.css")
   body
     header
+      h4 "I see you" through
       h1 Noom
     main
       div#welcome
-        form
-          input#roomInput(placeholder="Room Name", required, type="text")
-          input#nickInput(placeholder="Nickname" required, type="text")
-          button Enter Room
+        section.welcome
+          form.login-form
+            input#roomInput(placeholder="Room Name", required, type="text")
+            input#nickInput(placeholder="Your Nick" required, type="text")
+            button Enter
+          h4 Please fill the Room Name and Your Nickname
       div#call
-        div#myStream
-          div#roomTitle
-          video#myFace(autoplay,playsinline, width="400", height="400")
-          span#myNickname
-          button#mute Mute
-          button#camera Turn Camera Off
-          select#cameras
-          video#peerFace(autoplay,playsinline, width="400", height="400")
-          span#peerNickname          
-        div#chat
-          div#chatList
-            ul 
-          div#chatInput
-            form
-              input(type="text" required placeholder="Leave a Message")
-              button Send
+        div.call
+          h2#roomTitle
+          div.controls
+            button#mute Mute
+            button#camera Cam Off
+            select#cameras
+          div#myStream.main
+            div.my-video
+              div#myNickname.chat-nick
+              video#myFace(autoplay,playsinline, width="480", height="270")
+            div.peer-video
+              div#peerNickname.chat-nick        
+              video#peerFace(autoplay,playsinline, width="480", height="270")
+            div#chat.chat
+              div#chatInput
+                form.chat-form
+                  input(type="text" required placeholder="Leave a Message")
+                  button Send
+              div#chatList
+                 ul.chat-list
     script(src="/socket.io/socket.io.js")
     script(src="/public/js/app.js")
