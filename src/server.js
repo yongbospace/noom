@@ -34,6 +34,14 @@ wsServer.on("connection", (socket) => {
   socket.on("ice", (ice, roomName) => {
     socket.to(roomName).emit("ice", ice);
   });
+  socket.on("disconnecting", () => {
+    socket.rooms.forEach((room) =>
+      socket.to(room).emit("bye", socket.nickname)
+    );
+  });
+  socket.on("disconnect", () => {
+    io.sockets.emit("room_change", publicRooms());
+  });
 });
 
 const handleListen = () => console.log(`listening on http://localhost:3000`);

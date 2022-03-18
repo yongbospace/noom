@@ -103,6 +103,8 @@ const welcomeForm = welcome.querySelector("form");
 const roomTitle = document.getElementById("roomTitle");
 const myNickname = document.getElementById("myNickname");
 const peerNickname = document.getElementById("peerNickname");
+const chatList = document.querySelector("#chatList ul");
+const chatForm = document.querySelector("#chatInput form");
 
 async function initCall() {
   welcome.hidden = true;
@@ -170,6 +172,12 @@ socket.on("ice", (ice) => {
   myPeerConnection.addIceCandidate(ice);
 });
 
+socket.on("bye", (nickname) => {
+  const li = document.createElement("li");
+  li.innerText = `${nickname} left`;
+  chatList.appendChild(li);
+});
+
 // RTC Code
 
 function makeConnection() {
@@ -203,9 +211,6 @@ function handleAddStream(data) {
 }
 
 // Chat
-const chatList = document.querySelector("#chatList ul");
-const chatForm = document.querySelector("#chatInput form");
-
 function handleGetChat(nickname, event) {
   const li = document.createElement("li");
   li.innerText = `${nickname}: ${event.data}`;
@@ -219,6 +224,7 @@ function handleSendChat(event) {
   const li = document.createElement("li");
   li.innerText = `${myNickname.innerText} : ${input.value}`;
   chatList.appendChild(li);
+  input.value = "";
 }
 
 chatForm.addEventListener("submit", handleSendChat);
