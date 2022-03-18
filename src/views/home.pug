@@ -15,10 +15,36 @@ html(lang="en")
       div#welcome
         section.welcome
           form.login-form
-            input#roomInput(placeholder="Room Name", required, type="text")
-            input#nickInput(placeholder="Your Nick" required, type="text")
+            input#roomInput(placeholder="Room Name", required, type="text" maxlength="20")
+            input#nickInput(placeholder="Your Nick" required, type="text" maxlength="20")
             button Enter
           h4 Please fill the Room Name and Your Nickname
+          div.gallery
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
+            div 
       div#call
         div.call
           h2#roomTitle
@@ -36,7 +62,7 @@ html(lang="en")
             div#chat.chat
               div#chatInput
                 form.chat-form
-                  input(type="text" required placeholder="Leave a Message")
+                  input(type="text" required placeholder="Leave a Message" maxlength="60")
                   button Send
               div#chatList
                  ul.chat-list
