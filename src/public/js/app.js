@@ -132,22 +132,24 @@ async function handlePeerNick(nickname) {
 welcomeForm.addEventListener("submit", handelWelcomeSubmit);
 
 // Socket Code
-
-socket.on("welcome", async () => {
+//  A user message
+socket.on("welcome", async (nickname) => {
   myDataChannel = myPeerConnection.createDataChannel("chat");
-  myDataChannel.addEventListener("message", (event) => console.log(event.data));
+  myDataChannel.addEventListener("message", (event) =>
+    handleGetChat(nickname, event)
+  );
   console.log("made data channel");
   const offer = await myPeerConnection.createOffer();
   myPeerConnection.setLocalDescription(offer);
   console.log("sent the offer");
   socket.emit("offer", offer, roomName);
 });
-
-socket.on("offer", async (offer) => {
+//  B user message
+socket.on("offer", async (offer, nickname) => {
   myPeerConnection.addEventListener("datachannel", (event) => {
     myDataChannel = event.channel;
     myDataChannel.addEventListener("message", (event) =>
-      console.log(event.data)
+      handleGetChat(nickname, event)
     );
   });
   console.log("received the offer");
@@ -199,3 +201,24 @@ function handleAddStream(data) {
   const peerFace = document.getElementById("peerFace");
   peerFace.srcObject = data.stream;
 }
+
+// Chat
+const chatList = document.querySelector("#chatList ul");
+const chatForm = document.querySelector("#chatInput form");
+
+function handleGetChat(nickname, event) {
+  const li = document.createElement("li");
+  li.innerText = `${nickname}: ${event.data}`;
+  chatList.appendChild(li);
+}
+
+function handleSendChat(event) {
+  event.preventDefault();
+  const input = chatForm.querySelector("input");
+  myDataChannel.send(input.value);
+  const li = document.createElement("li");
+  li.innerText = `${myNickname.innerText} : ${input.value}`;
+  chatList.appendChild(li);
+}
+
+chatForm.addEventListener("submit", handleSendChat);
