@@ -35,9 +35,13 @@ wsServer.on("connection", (socket) => {
     console.log("send nickname");
   });
   socket.on("join_room", (roomName) => {
-    socket.join(roomName);
-    socket.to(roomName).emit("welcome", socket.nickname);
-    socket.to(roomName).emit("peerNickname", socket.nickname);
+    if (wsServer.sockets.adapter.rooms.get(roomName)?.size === 2) {
+      socket.emit("dismiss");
+    } else {
+      socket.join(roomName);
+      socket.to(roomName).emit("welcome", socket.nickname);
+      socket.to(roomName).emit("peerNickname", socket.nickname);
+    }
   });
   socket.on("offer", (offer, roomName) => {
     socket.to(roomName).emit("offer", offer, socket.nickname);
@@ -61,3 +65,5 @@ wsServer.on("connection", (socket) => {
 
 const handleListen = () => console.log(`listening on http://localhost:3000`);
 httpServer.listen(3000, handleListen);
+
+// socket.leave로 떠기 구현

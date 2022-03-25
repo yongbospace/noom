@@ -133,6 +133,11 @@ async function handlePeerNick(nickname) {
 
 welcomeForm.addEventListener("submit", handelWelcomeSubmit);
 
+socket.on("dismiss", () => {
+  alert("This room is already full(2/2), you will return to the Home.");
+  window.location.reload(true);
+});
+
 // Socket Code
 //  A user message
 socket.on("welcome", async (nickname) => {
@@ -176,6 +181,7 @@ socket.on("bye", (nickname) => {
   const li = document.createElement("li");
   li.innerText = `${nickname} left`;
   chatList.appendChild(li);
+  setTimeout(() => window.location.reload(true), 2000);
 });
 
 // RTC Code
@@ -194,7 +200,7 @@ function makeConnection() {
     ],
   });
   myPeerConnection.addEventListener("icecandidate", handleIce);
-  myPeerConnection.addEventListener("addstream", handleAddStream);
+  myPeerConnection.addEventListener("track", handleAddStream);
   myStream
     .getTracks()
     .forEach((track) => myPeerConnection.addTrack(track, myStream));
@@ -207,7 +213,7 @@ function handleIce(data) {
 
 function handleAddStream(data) {
   const peerFace = document.getElementById("peerFace");
-  peerFace.srcObject = data.stream;
+  peerFace.srcObject = data.streams[0];
 }
 
 // Chat
